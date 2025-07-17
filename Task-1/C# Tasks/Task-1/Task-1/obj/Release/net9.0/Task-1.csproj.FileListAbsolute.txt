@@ -1,0 +1,14 @@
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\bin\Release\net9.0\Task-1.exe
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\bin\Release\net9.0\Task-1.deps.json
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\bin\Release\net9.0\Task-1.runtimeconfig.json
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\bin\Release\net9.0\Task-1.dll
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\bin\Release\net9.0\Task-1.pdb
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\Task-1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\Task-1.AssemblyInfoInputs.cache
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\Task-1.AssemblyInfo.cs
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\Task-1.csproj.CoreCompileInputs.cache
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\Task-1.dll
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\refint\Task-1.dll
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\Task-1.pdb
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\Task-1.genruntimeconfig.cache
+C:\Users\ahmed\Desktop\InnoTasks\Task-1\C# Tasks\Task-1\Task-1\obj\Release\net9.0\ref\Task-1.dll
