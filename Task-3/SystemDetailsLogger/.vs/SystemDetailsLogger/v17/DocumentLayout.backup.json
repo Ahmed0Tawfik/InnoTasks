@@ -1,0 +1,74 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ahmed\\Desktop\\InnoTasks\\Task-3\\SystemDetailsLogger\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{004A9C1F-5C83-477A-BBB1-E54BDE09107C}|SystemDetailsLogger.csproj|c:\\users\\ahmed\\desktop\\innotasks\\task-3\\systemdetailslogger\\filewriter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{004A9C1F-5C83-477A-BBB1-E54BDE09107C}|SystemDetailsLogger.csproj|solutionrelative:filewriter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{004A9C1F-5C83-477A-BBB1-E54BDE09107C}|SystemDetailsLogger.csproj|c:\\users\\ahmed\\desktop\\innotasks\\task-3\\systemdetailslogger\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{004A9C1F-5C83-477A-BBB1-E54BDE09107C}|SystemDetailsLogger.csproj|solutionrelative:constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Constants.cs",
+              "DocumentMoniker": "C:\\Users\\ahmed\\Desktop\\InnoTasks\\Task-3\\SystemDetailsLogger\\Constants.cs",
+              "RelativeDocumentMoniker": "Constants.cs",
+              "ToolTip": "C:\\Users\\ahmed\\Desktop\\InnoTasks\\Task-3\\SystemDetailsLogger\\Constants.cs",
+              "RelativeToolTip": "Constants.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T16:27:55.173Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FileWriter.cs",
+              "DocumentMoniker": "C:\\Users\\ahmed\\Desktop\\InnoTasks\\Task-3\\SystemDetailsLogger\\FileWriter.cs",
+              "RelativeDocumentMoniker": "FileWriter.cs",
+              "ToolTip": "C:\\Users\\ahmed\\Desktop\\InnoTasks\\Task-3\\SystemDetailsLogger\\FileWriter.cs",
+              "RelativeToolTip": "FileWriter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T16:13:52.574Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+//List<Teacher>? teachers = new List<Teacher>();
+//builder.Services.AddSingleton(teachers);
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(o => o.AddPolicy(myAllowSpecificOrigins, e => e.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+WebApplication? app = builder.Build();
+
+app.UseCors(myAllowSpecificOrigins);
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
