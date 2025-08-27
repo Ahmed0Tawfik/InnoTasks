@@ -39,11 +39,17 @@
             Result = new Label();
             Error = new Label();
             ReadAllStudents = new Button();
+            GetStudentById = new Button();
+            StudentId = new NumericUpDown();
+            UpdateStudent = new Button();
+            StudentsGrid = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)StudentId).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StudentsGrid).BeginInit();
             SuspendLayout();
             // 
             // Save
             // 
-            Save.Location = new Point(88, 183);
+            Save.Location = new Point(356, 20);
             Save.Name = "Save";
             Save.Size = new Size(94, 29);
             Save.TabIndex = 0;
@@ -101,7 +107,7 @@
             // 
             // Clear
             // 
-            Clear.Location = new Point(245, 183);
+            Clear.Location = new Point(356, 67);
             Clear.Name = "Clear";
             Clear.Size = new Size(94, 29);
             Clear.TabIndex = 7;
@@ -112,7 +118,7 @@
             // Result
             // 
             Result.AutoSize = true;
-            Result.Location = new Point(88, 242);
+            Result.Location = new Point(36, 344);
             Result.Name = "Result";
             Result.Size = new Size(0, 20);
             Result.TabIndex = 8;
@@ -120,14 +126,14 @@
             // Error
             // 
             Error.AutoSize = true;
-            Error.Location = new Point(88, 289);
+            Error.Location = new Point(36, 391);
             Error.Name = "Error";
             Error.Size = new Size(0, 20);
             Error.TabIndex = 9;
             // 
             // ReadAllStudents
             // 
-            ReadAllStudents.Location = new Point(88, 233);
+            ReadAllStudents.Location = new Point(88, 167);
             ReadAllStudents.Name = "ReadAllStudents";
             ReadAllStudents.Size = new Size(251, 29);
             ReadAllStudents.TabIndex = 10;
@@ -135,12 +141,53 @@
             ReadAllStudents.UseVisualStyleBackColor = true;
             ReadAllStudents.Click += ReadAllStudents_Click;
             // 
+            // GetStudentById
+            // 
+            GetStudentById.BackColor = Color.White;
+            GetStudentById.Location = new Point(89, 216);
+            GetStudentById.Name = "GetStudentById";
+            GetStudentById.Size = new Size(135, 29);
+            GetStudentById.TabIndex = 11;
+            GetStudentById.Text = "Get Student";
+            GetStudentById.UseVisualStyleBackColor = false;
+            GetStudentById.Click += GetStudentById_Click;
+            // 
+            // StudentId
+            // 
+            StudentId.Location = new Point(230, 216);
+            StudentId.Name = "StudentId";
+            StudentId.Size = new Size(82, 27);
+            StudentId.TabIndex = 12;
+            // 
+            // UpdateStudent
+            // 
+            UpdateStudent.Location = new Point(88, 264);
+            UpdateStudent.Name = "UpdateStudent";
+            UpdateStudent.Size = new Size(134, 29);
+            UpdateStudent.TabIndex = 13;
+            UpdateStudent.Text = "Update Student";
+            UpdateStudent.UseVisualStyleBackColor = true;
+            UpdateStudent.Click += UpdateStudent_Click;
+            // 
+            // StudentsGrid
+            // 
+            StudentsGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            StudentsGrid.Location = new Point(456, 12);
+            StudentsGrid.Name = "StudentsGrid";
+            StudentsGrid.RowHeadersWidth = 51;
+            StudentsGrid.Size = new Size(545, 572);
+            StudentsGrid.TabIndex = 14;
+            // 
             // StudentsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(233, 232, 175);
-            ClientSize = new Size(367, 364);
+            ClientSize = new Size(1005, 588);
+            Controls.Add(StudentsGrid);
+            Controls.Add(UpdateStudent);
+            Controls.Add(StudentId);
+            Controls.Add(GetStudentById);
             Controls.Add(ReadAllStudents);
             Controls.Add(Error);
             Controls.Add(Result);
@@ -154,6 +201,9 @@
             Controls.Add(Save);
             Name = "StudentsForm";
             Text = "Students";
+            Load += StudentsForm_Load;
+            ((System.ComponentModel.ISupportInitialize)StudentId).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StudentsGrid).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -171,5 +221,9 @@
         private Label Result;
         private Label Error;
         private Button ReadAllStudents;
+        private Button GetStudentById;
+        private NumericUpDown StudentId;
+        private Button UpdateStudent;
+        private DataGridView StudentsGrid;
     }
 }

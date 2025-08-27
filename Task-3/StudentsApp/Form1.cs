@@ -1,40 +1,40 @@
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
+using ApiClientService;
 
 namespace StudentsApp
 {
     public partial class StudentsForm : Form
     {
-        List<Student> students = new();
+        List<Student>? students = new();
+        Student? displayedStudent = new();
+
+        IApiClient apiClient = new ApiClient(Uri.BaseUri); // made up a apiclient service to use it everywhere
+
         public StudentsForm()
         {
             InitializeComponent();
         }
 
-        private void Save_Click(object sender, EventArgs e)
+        private async void Save_Click(object sender, EventArgs e)
         {
             bool isAgeValid = int.TryParse(StudentAge.Text, out int studentAge);
 
             Student student = new Student();
-            student.Id = 1;
+
+            student.Id = 1; // should make it guid
             student.Name = StudentName.Text;
             student.Age = isAgeValid ? studentAge : 18;
             student.Mobile = StudentMobile.Text;
 
-            students.Add(student);
+            students?.Add(student);
 
-            HttpClient client = new HttpClient();
-            string studentSerialized = JsonSerializer.Serialize(student);
-            HttpContent content = new StringContent(studentSerialized, Encoding.UTF8, "application/json");
+            Student? studentFromDatabase = await apiClient.PostAsync<Student>(Endpoints.student, student);
 
-            HttpResponseMessage? httpResponseMessage = client.PostAsync("https://students.innopack.app/api/students", content).GetAwaiter().GetResult();
-            if (httpResponseMessage.IsSuccessStatusCode)
+            if (studentFromDatabase is not null)
             {
-                MessageBox.Show($"Student{student.Name} was saved successfully", "Success");
+                MessageBox.Show($"Student{studentFromDatabase.Name} was saved successfully with ID:{studentFromDatabase.Id}", "Success");
             }
 
-            Result.Text = $"Student {student.Name} was added successfully, Total students count = {students.Count}";
+            Result.Text = $"Student {student.Name} was added successfully, Total students count = {students?.Count}";
         }
 
         private void Clear_Click(object sender, EventArgs e)
@@ -44,18 +44,42 @@ namespace StudentsApp
             StudentMobile.Text = string.Empty;
         }
 
-        private void ReadAllStudents_Click(object sender, EventArgs e)
+        private async void ReadAllStudents_Click(object sender, EventArgs e)
         {
-            HttpClient client = new HttpClient();
+            List<Student>? students = await apiClient.GetAllAsync<Student>(Endpoints.student);
 
-            HttpResponseMessage? httpResponseMessage = client.GetAsync("https://students.innopack.app/api/students").GetAwaiter().GetResult();
-            if (httpResponseMessage.IsSuccessStatusCode)
-            {
-                string responseContent = httpResponseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                List<Student>? students = JsonSerializer.Deserialize<List<Student>>(responseContent);
+            StudentsGrid.DataSource = students;
+        }
 
-                MessageBox.Show($"Student count = {students?.Count}", "Information");
-            }
+        private async void GetStudentById_Click(object sender, EventArgs e)
+        {
+            displayedStudent = await apiClient.GetById<Student>($"{Endpoints.student}{StudentId.Value}");
+
+            StudentName.Text = displayedStudent?.Name;
+            StudentAge.Text = displayedStudent?.Age.ToString();
+            StudentMobile.Text = displayedStudent?.Mobile?.ToString();
+
+
+
+        }
+
+        private async void UpdateStudent_Click(object sender, EventArgs e)
+        {
+            // i dont know if put is configured on backend or what does it return it says forbidden // same with delete function
+            int age = 0;
+            displayedStudent.Name = StudentAge.Text;
+            displayedStudent.Age = int.TryParse(StudentAge.Text, out age) ? age : 18;
+            displayedStudent.Mobile = StudentMobile.Text;
+
+            Student? updatedStudent = await apiClient.PutAsync<Student>(Endpoints.student, displayedStudent);
+
+            
+
+        }
+
+        private void StudentsForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

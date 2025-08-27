@@ -1,0 +1,7 @@
+each process has its own virtual memory, if another process violates its space its throws AccessViolationException
+its guarded with the os/kernel itself
+
+
+
+we can remove multiple objects in one go using RemoveAll() method in collection interface
+ex: items.RemoveAll(condition delegate);
