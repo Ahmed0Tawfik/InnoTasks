@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentsAffairsWebAPI;
 
@@ -10,9 +11,11 @@ using StudentsAffairsWebAPI;
 namespace StudentsAffairsWebAPI.Migrations
 {
     [DbContext(typeof(StudentsAffairsDbContext))]
-    partial class StudentsAffairsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250910163617_fixproblems")]
+    partial class fixproblems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

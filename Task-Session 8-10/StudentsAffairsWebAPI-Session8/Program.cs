@@ -9,7 +9,8 @@ WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
 //List<Teacher>? teachers = new List<Teacher>();
 //builder.Services.AddSingleton(teachers);
 
-string connectingString = "Data Source=.;Initial Catalog=StudentsAffairsDB;User Id=omar;Password=O@123;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;";
+string connectingString =
+    "Data Source=.;Initial Catalog=StudentsAffairsDB;User Id=omar;Password=O@123;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;";
 
 builder.Services.AddDbContext<StudentsAffairsDbContext>(options => options
                 .UseSqlServer(connectingString)

@@ -3,6 +3,9 @@
 //DML(Insert,Select,Update,Delete),
 //DCL(Grant Update on table students to wael,revoke)
 
+
+using System.Diagnostics;
+
 namespace StudentsAffairsWebAPI;
 
 [Route("api/[controller]")]
@@ -17,18 +20,67 @@ public class BaseController<TEntity> : ControllerBase
         _studentsAffairsDbContext = studentsAffairsDbContext;
 
         if (_studentsAffairsDbContext.Set<TEntity>() is null || !_studentsAffairsDbContext.Set<TEntity>().Any())
-            Fill(maxEntityCount);
-    }
-    public void Fill(int desiredCount)
-    {
-        //TODO:: fill using Activate
-        //for (int i = 1; i <= desiredCount; i++)
-        //{
-        //    TEntity entity = new() { Id = i, Name = $"TEntity{i}", Age = Convert.ToByte(i + 30), Mobile = $"012784512{i}" };
-        //    _studentsAffairsDbContext.Students.Add(entity);
-        //}
+        {
+            FillNormal(maxEntityCount).GetAwaiter().GetResult();
 
-        _studentsAffairsDbContext.SaveChanges();
+            FillBulk(maxEntityCount).GetAwaiter().GetResult();
+
+        }
+
+    }
+
+    public async Task FillNormal(int desiredCount)
+    {
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
+
+        for (int i = desiredCount + 10; i <= desiredCount + 20; i++)
+        {
+            TEntity entity = Activator.CreateInstance<TEntity>();
+
+            entity.Name = $"Name{i}";
+
+            Type entityType = typeof(TEntity);
+
+            entityType.GetProperty("Age")?.SetValue(entity, (byte)(30 + i));
+            entityType.GetProperty("Mobile")?.SetValue(entity, "124125125");
+
+           await _studentsAffairsDbContext.Set<TEntity>().AddAsync(entity);
+
+        }
+
+        await _studentsAffairsDbContext.SaveChangesAsync();
+        stopWatch.Stop();
+        Console.WriteLine($"EF Normal SaveChanges: {stopWatch.ElapsedMilliseconds} ms");
+    }
+    public async Task FillBulk(int desiredCount)
+    {
+        List<TEntity> listToBeInserted = new List<TEntity>();
+
+        Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
+
+        for (int i = 1; i <= desiredCount; i++)
+        {
+            TEntity entity = Activator.CreateInstance<TEntity>();
+
+            entity.Name = $"Name{i}";
+            
+            Type entityType = typeof(TEntity);
+
+            entityType.GetProperty("Age")?.SetValue(entity, (byte)(30 + i));
+            entityType.GetProperty("Mobile")?.SetValue(entity, "124125125");
+
+            listToBeInserted.Add(entity);
+
+        }
+
+        // real bulk insert 
+        await _studentsAffairsDbContext.BulkInsertAsync(listToBeInserted);
+
+        stopWatch.Stop();
+        Console.WriteLine($"EF Bulk SaveChanges: {stopWatch.ElapsedMilliseconds} ms");
+
     }
 
     [HttpPost]
@@ -76,6 +128,17 @@ public class BaseController<TEntity> : ControllerBase
             TEntity? entityFromDb = _studentsAffairsDbContext.Set<TEntity>().FirstOrDefault(e => e.Id.Equals(entity.Id));
             
             if (entityFromDb is null) return NotFound(entity);
+
+            var type = typeof(TEntity);
+
+            foreach (var prop in type.GetProperties())
+            {
+                if (prop.CanWrite)
+                {
+                    var newValue = prop.GetValue(entity);
+                    prop.SetValue(entityFromDb, newValue);
+                }
+            }
 
             //use reflections to read and set props 
             //entityFromDb.Name = entity.Name;
@@ -128,6 +191,7 @@ public class BaseController<TEntity> : ControllerBase
             if (entityFromDb is null) return NotFound(entity);
 
             _studentsAffairsDbContext.Set<TEntity>().Remove(entityFromDb);
+            _studentsAffairsDbContext.SaveChanges();
 
             return Ok(entity);
         }

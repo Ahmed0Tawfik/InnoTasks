@@ -8,6 +8,7 @@ public class StudentsAffairsDbContext : DbContext
     }
 
     public DbSet<Student> Students { get; set; }
+    public DbSet<Doctor> Doctors { get; set; }   
     public DbSet<Applicant> Applicants { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,5 +42,20 @@ public class StudentsAffairsDbContext : DbContext
         modelBuilder.Entity<Applicant>().Property(e => e.Mobile).HasMaxLength(20);
         modelBuilder.Entity<Applicant>().Property(e => e.Age).HasMaxLength(2);
         modelBuilder.Entity<Applicant>().Property(e => e.Age).HasDefaultValue(18);
+
+
+
+        modelBuilder.Entity<Doctor>().ToTable("Doctor");
+
+        modelBuilder.Entity<Doctor>().HasKey(e => e.Id);
+        modelBuilder.Entity<Doctor>().HasIndex(e => e.Name).IsUnique();
+
+        modelBuilder.Entity<Doctor>().Property(e => e.Id).IsRequired();
+        modelBuilder.Entity<Doctor>().Property(e => e.Id).HasMaxLength(5);
+        modelBuilder.Entity<Doctor>().Property(e => e.Name).IsRequired();
+        modelBuilder.Entity<Doctor>().Property(e => e.Name).HasMaxLength(50);
+        modelBuilder.Entity<Doctor>().Property(e => e.Mobile).HasMaxLength(20);
+        modelBuilder.Entity<Doctor>().Property(e => e.Age).HasMaxLength(2);
+        modelBuilder.Entity<Doctor>().Property(e => e.Age).HasDefaultValue(18);
     }
 }
