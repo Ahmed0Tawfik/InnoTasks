@@ -1,0 +1,27 @@
+@page "/multiple-render-fragments"
+<div class="container">
+    <h4>Header Section</h4>
+    @HeaderContent
+    
+    <h4>Main Content Section</h4>
+    @MainContent
+</div>
+
+@code {
+    [Parameter] public RenderFragment? HeaderContent { get; set; }
+    [Parameter] public RenderFragment? MainContent { get; set; }
+}
+
+
+<MultipleRenderFragment>
+    <HeaderContent>
+        <h1>Welcome to My App</h1>
+        <p>This is the header content</p>
+    </HeaderContent>
+    
+    <MainContent>
+        <p>This is the main content area where you can put anything.</p>
+        <button class="btn btn-primary">Click Me</button>
+    </MainContent>
+    
+</MultipleRenderFragment>

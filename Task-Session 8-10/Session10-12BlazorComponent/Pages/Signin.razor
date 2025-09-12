@@ -1,0 +1,34 @@
+﻿@page "/signin"
+
+<div class="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+    <div class="row w-100">
+        <div class="col-md-6 col-lg-4 mx-auto">
+            <main class="form-signin">
+                <form @onsubmit="HandleSignIn">
+                    <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" @bind="signInModel.Email" class="form-control" id="floatingInput" placeholder=" " />
+                        <label for="floatingInput">Email address</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" @bind="signInModel.Password" class="form-control" id="floatingPassword" placeholder=" " />
+                        <label for="floatingPassword">Password</label>
+                    </div>
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" @bind="signInModel.RememberMe" /> Remember me
+                        </label>
+                    </div>
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                </form>
+            </main>
+        </div>
+    </div>
+</div>
+
+
+
