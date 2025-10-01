@@ -11,6 +11,7 @@ public class StudentsController : BaseController<Student>
 {
     public StudentsController(StudentsAffairsDbContext studentsAffairsDbContext): base(studentsAffairsDbContext)
     {
+
     }
    
 }

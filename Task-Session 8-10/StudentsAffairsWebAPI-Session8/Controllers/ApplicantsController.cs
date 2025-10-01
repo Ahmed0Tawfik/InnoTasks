@@ -13,4 +13,10 @@ public class ApplicantsController : BaseController<Applicant>
     {
         return _studentsAffairsDbContext.Set<Applicant>().Where(e => e.Age >= 40).ToList() ?? new();
     }
+
+    //override public IActionResult Post([FromBody] Applicant entity)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
 }

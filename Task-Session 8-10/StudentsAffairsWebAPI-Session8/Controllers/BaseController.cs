@@ -84,7 +84,7 @@ public class BaseController<TEntity> : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] TEntity entity)
+    internal virtual IActionResult Post([FromBody] TEntity entity)
     {
         _studentsAffairsDbContext.Set<TEntity>().Add(entity);
         _studentsAffairsDbContext.SaveChanges();
@@ -129,7 +129,7 @@ public class BaseController<TEntity> : ControllerBase
             
             if (entityFromDb is null) return NotFound(entity);
 
-            var type = typeof(TEntity);
+            Type type = typeof(TEntity);
 
             foreach (var prop in type.GetProperties())
             {
