@@ -1,10 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BlazorAppStandAlone;
-
-public class Student
+﻿namespace StudentAffairs.Application;
+public record StudentDto
 {
-
     public Guid Id { get; set; }
     public string? Name { get; set; }
     public string? Mobile { get; set; }
@@ -12,6 +8,5 @@ public class Student
     public string? Email { get; set; }
     public int Age { get; set; }
     public string? Message { get; set; }
-
-    public byte[] RowVersion { get; set; } = new byte[0];
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

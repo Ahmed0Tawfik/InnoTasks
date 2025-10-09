@@ -5,7 +5,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddValidatorsFromAssemblyContaining<StudentValidator>();
 
 builder.Services.AddScoped<IApiClient>(provider =>
-    new ApiClient("https://students.innopack.app/api/students"));
+    new ApiClient("https://localhost:7058/api/Student"));
 
 
 await builder.Build().RunAsync();

@@ -17,74 +17,75 @@ public class ApiClient : IApiClient
         _httpClient.BaseAddress = new Uri(baseUri ?? "localhost");
     }
 
-    public async Task<string> DeleteAsync(string url)
+    public async Task<ApiResponse<string>> DeleteAsync(string url)
     {
-
         HttpResponseMessage? httpResponseMessage = await _httpClient.DeleteAsync(url);
-
-        if (httpResponseMessage.IsSuccessStatusCode)
-        {
-            return httpResponseMessage.Content.ReadAsStringAsync().Result;
-        }
-
-        return "Error Deleting the Object";
+        return await ToApiResponseAsync<string>(httpResponseMessage, readBody: true);
     }
 
-    public async Task<T?> GetById<T>(string url)
+    public async Task<ApiResponse<T>> GetById<T>(string url)
     {
         HttpResponseMessage? response = await _httpClient.GetAsync(url);
-
-        if(response.IsSuccessStatusCode)
-        {
-            string responseContent = await response.Content.ReadAsStringAsync();
-            T? entity = JsonSerializer.Deserialize<T>(responseContent, _jsonOptions);
-            return entity;
-        }
-        return default;
+        return await ToApiResponseAsync<T>(response);
     }
 
-    public async Task<List<T>?>  GetAllAsync<T>(string url)
+    public async Task<ApiResponse<List<T>>> GetAllAsync<T>(string url)
     {
         HttpResponseMessage? response = await _httpClient.GetAsync(url);
-
-        if(response.IsSuccessStatusCode)
-        {
-            string responseContent = await response.Content.ReadAsStringAsync();
-            List<T>? entities = JsonSerializer.Deserialize<List<T>>(responseContent, _jsonOptions);
-            return entities;
-        }
-
-        return default; // default of list<t> 
-        
+        return await ToApiResponseAsync<List<T>>(response);
     }
 
-    public async Task<T?> PostAsync<T>(string url, T data)
+    public async Task<ApiResponse<T>> PostAsync<T>(string url, T data)
     {
         string dataSerialized = JsonSerializer.Serialize(data);
         HttpContent content = new StringContent(dataSerialized, Encoding.UTF8, "application/json");
-
         HttpResponseMessage? httpResponseMessage = await _httpClient.PostAsync(url, content);
-
-        if (httpResponseMessage.IsSuccessStatusCode)
-        {
-            return data;
-        }
-
-        return default;
+        return await ToApiResponseAsync<T>(httpResponseMessage);
     }
 
-    public async Task<T?> PutAsync<T>(string url, T data)
+    public async Task<ApiResponse<T>> PutAsync<T>(string url, T data)
     {
         string dataSerialized = JsonSerializer.Serialize(data, _jsonOptions);
         HttpContent content = new StringContent(dataSerialized, Encoding.UTF8, "application/json");
-
         HttpResponseMessage? httpResponseMessage = await _httpClient.PutAsync(url, content);
+        return await ToApiResponseAsync<T>(httpResponseMessage);
+    }
 
-        if (httpResponseMessage.IsSuccessStatusCode)
+    private static async Task<ApiResponse<T>> ToApiResponseAsync<T>(HttpResponseMessage response, bool readBody = false)
+    {
+        string responseContent = await response.Content.ReadAsStringAsync();
+        
+        if (response.IsSuccessStatusCode)
         {
-            return data;
+            if (typeof(T) == typeof(string) && readBody)
+            {
+                return ApiResponse<T>.SuccessResult((T)(object)(responseContent ?? string.Empty));
+            }
+
+            if (!string.IsNullOrWhiteSpace(responseContent))
+            {
+                var apiResponse = JsonSerializer.Deserialize<ApiResponse<T>>(responseContent, _jsonOptions);
+                return apiResponse ?? ApiResponse<T>.ErrorResult("Failed to deserialize response");
+            }
+            
+            return ApiResponse<T>.SuccessResult(default(T)!);
         }
 
-        return default;
+        if (!string.IsNullOrWhiteSpace(responseContent))
+        {
+            try
+            {
+                var errorResponse = JsonSerializer.Deserialize<ApiResponse<T>>(responseContent, _jsonOptions);
+                if (errorResponse != null)
+                {
+                    return errorResponse;
+                }
+            }
+            catch
+            {
+            }
+        }
+        
+        return ApiResponse<T>.ErrorResult($"Request failed with status: {response.StatusCode}");
     }
 }
