@@ -37,9 +37,9 @@ public class StudentController : ControllerBase
     public async Task<IActionResult> Create([FromBody] CreateStudentDto dto)
     {
         var response = await _studentService.CreateAsync(dto);
-        
+
         if (response.Success)
-            return CreatedAtAction(nameof(GetById), new { id = response.Data!.Id }, response);
+            return Ok(response);
         
         return BadRequest(response);
     }

@@ -1,74 +1,48 @@
-﻿
-namespace StudentAffairs.Application;
-
-
-public class StudentService : IStudentService
+﻿namespace StudentAffairs.Application
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public StudentService(IUnitOfWork unitOfWork, IMapper mapper)
+    public class StudentService : IStudentService
     {
-        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-    }
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-    public async Task<ApiResponse<IEnumerable<StudentDto>>> GetAllAsync()
-    {
-        try
+        public StudentService(IUnitOfWork unitOfWork, IMapper mapper)
+        {
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
+
+        public async Task<ApiResponse<IEnumerable<StudentDto>>> GetAllAsync()
         {
             var students = await _unitOfWork.Repository<Student>().GetAllAsync();
             var studentDtos = _mapper.Map<IEnumerable<StudentDto>>(students);
             return ApiResponse<IEnumerable<StudentDto>>.SuccessResult(studentDtos);
         }
-        catch (Exception ex)
-        {
-            return ApiResponse<IEnumerable<StudentDto>>.ErrorResult($"Error retrieving students: {ex.Message}");
-        }
-    }
 
-    public async Task<ApiResponse<StudentDto>> GetByIdAsync(Guid id)
-    {
-        try
+        public async Task<ApiResponse<StudentDto>> GetByIdAsync(Guid id)
         {
             var student = await _unitOfWork.Repository<Student>().GetByIdAsync(id);
 
             if (student is null)
-                return ApiResponse<StudentDto>.ErrorResult($"Student with ID  not found.");
+                return ApiResponse<StudentDto>.ErrorResult($"Student with ID not found.");
 
             var studentDto = _mapper.Map<StudentDto>(student);
             return ApiResponse<StudentDto>.SuccessResult(studentDto);
         }
-        catch (Exception ex)
-        {
-            return ApiResponse<StudentDto>.ErrorResult($"Error retrieving student: {ex.Message}");
-        }
-    }
 
-    public async Task<ApiResponse<StudentDto>> CreateAsync(CreateStudentDto dto)
-    {
-        try
+        public async Task<ApiResponse<StudentDto>> CreateAsync(CreateStudentDto dto)
         {
             if (dto is null)
                 return ApiResponse<StudentDto>.ErrorResult("Student data is required.");
 
             var entity = _mapper.Map<Student>(dto);
-
             await _unitOfWork.Repository<Student>().AddAsync(entity);
             await _unitOfWork.SaveChangesAsync();
 
             var studentDto = _mapper.Map<StudentDto>(entity);
             return ApiResponse<StudentDto>.SuccessResult(studentDto);
         }
-        catch (Exception ex)
-        {
-            return ApiResponse<StudentDto>.ErrorResult($"Error creating student: {ex.Message}");
-        }
-    }
 
-    public async Task<ApiResponse> UpdateAsync(StudentDto dto)
-    {
-        try
+        public async Task<ApiResponse> UpdateAsync(StudentDto dto)
         {
             var student = await _unitOfWork.Repository<Student>().GetByIdAsync(dto.Id);
 
@@ -83,15 +57,8 @@ public class StudentService : IStudentService
             await _unitOfWork.SaveChangesAsync();
             return ApiResponse.SuccessResult();
         }
-        catch (Exception ex)
-        {
-            return ApiResponse.ErrorResult($"Error updating student: {ex.Message}");
-        }
-    }
 
-    public async Task<ApiResponse> DeleteAsync(Guid id)
-    {
-        try
+        public async Task<ApiResponse> DeleteAsync(Guid id)
         {
             var student = await _unitOfWork.Repository<Student>().GetByIdAsync(id);
             if (student is null)
@@ -100,10 +67,6 @@ public class StudentService : IStudentService
             _unitOfWork.Repository<Student>().Delete(student);
             await _unitOfWork.SaveChangesAsync();
             return ApiResponse.SuccessResult();
-        }
-        catch (Exception ex)
-        {
-            return ApiResponse.ErrorResult($"Error deleting student: {ex.Message}");
         }
     }
 }

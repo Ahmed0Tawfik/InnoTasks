@@ -32,9 +32,15 @@ public class ExceptionMiddleware
         HttpStatusCode statusCode;
         string message;
 
-        if (ex is AppException exception)
+        if (ex is FluentValidation.ValidationException ValidationException)
         {
-            statusCode = (HttpStatusCode)exception.StatusCode;
+            statusCode = HttpStatusCode.BadRequest;
+            message = string.Join(", ", ValidationException.Errors.Select(e => e.ErrorMessage));
+        }
+
+        if (ex is AppException AppException)
+        {
+            statusCode = (HttpStatusCode)AppException.StatusCode;
             message = ex.Message;
         }
         else

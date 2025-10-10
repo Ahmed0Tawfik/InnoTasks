@@ -1,3 +1,5 @@
+using StudentAffairs.API.Filters;
+
 namespace StudentAffairsAPI;
 
 public class Program
@@ -7,14 +9,21 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(options =>
+        {
+            options.Filters.Add<ValidationFilter>();
+        });
         
         builder.Services.AddEndpointsApiExplorer();
 
         builder.Services.AddApplicationDbContext(builder.Configuration);
         builder.Services.AddRepositories();
 
-        builder.Services.AddValidatorsFromAssembly(typeof(StudentValidator).Assembly);
+
+
+      
+        builder.Services.AddValidatorsFromAssembly(typeof(CreateStudentDto).Assembly);
+
         builder.Services.AddApplicationServices();
 
 

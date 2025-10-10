@@ -1,8 +1,8 @@
 ﻿namespace StudentAffairs.Application;
 
-public class StudentValidator : AbstractValidator<StudentDto>
+public class CreateStudentDtoValidator : AbstractValidator<StudentDto>
 {
-    public StudentValidator()
+    public CreateStudentDtoValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required")
